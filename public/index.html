@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07172e">
+  <meta name="description" content="เว็บไซต์ลงคะแนนเลือกนายกรัฐมนตรีสำหรับกิจกรรม Roblox The lives of Thai soldiers on the border">
+  <title>เลือกนายกรัฐมนตรี | The lives of Thai soldiers on the border</title>
+  <link rel="stylesheet" href="/style.css?v=candidate-image-crop-2">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="seal"><img src="/logo.png" alt="ตราประจำกิจกรรม Roblox"></div><div><strong id="brand-title">เลือกนายกรัฐมนตรี</strong><small id="brand-event-name">The lives of Thai soldiers on the border</small></div></div>
+  <nav><a href="#home">หน้าแรก</a><a class="active" href="#candidates">ผู้สมัคร</a><a href="#vote-guide">ลงคะแนน</a><a href="#results">ผลคะแนน</a></nav>
+  <div class="player"><span class="avatar">▣<img id="player-avatar" alt="" hidden></span><span id="player-name">ผู้เยี่ยมชม<small id="login-state">ยังไม่ได้เข้าสู่ระบบ</small></span></div>
+</header>
+<main>
+  <section class="hero" id="home"><div class="hero-copy"><p class="eyebrow" id="event-name">THE LIVES OF THAI SOLDIERS ON THE BORDER • ROBLOX</p><h1 id="hero-title">เลือกนายกรัฐมนตรี</h1><h2 id="hero-subtitle">ร่วมกำหนดทิศทางประเทศ</h2><p id="hero-description">ตรวจสอบผู้สมัครและหมายเลขก่อนลงคะแนนในกิจกรรม Roleplay</p><div class="hero-note" id="site-notice">กิจกรรมจำลองภายใน Roblox เท่านั้น ไม่ใช่การเลือกตั้งหรือหน่วยงานของรัฐในชีวิตจริง</div></div><aside class="election-status"><h3>◷ &nbsp;ระยะเวลาการเลือกตั้ง</h3><div class="dates"><div><small>เริ่มลงคะแนน</small><b>รอผู้ดูแลกำหนด</b></div><div><small>สิ้นสุดลงคะแนน</small><b>รอผู้ดูแลกำหนด</b></div></div><div class="status"><span class="dot"></span><span><small>สถานะกิจกรรม</small><b id="election-state">ปิดรับคะแนน</b></span></div></aside></section>
+  <section class="section-head" id="candidates"><div><p class="eyebrow">IN-GAME CANDIDATES</p><h2>ผู้สมัครนายกรัฐมนตรี</h2><p>ตรวจสอบข้อมูลและหมายเลขผู้สมัครในกิจกรรม</p></div><input id="search" type="search" placeholder="ค้นหากลุ่มหรือผู้สมัคร…" aria-label="ค้นหากลุ่มหรือผู้สมัคร"></section>
+  <div class="layout"><section class="candidate-grid" id="candidate-grid" aria-live="polite"></section><aside class="side-panel" id="vote-guide"><h3>◈ &nbsp;ตรวจสอบสิทธิ / ลงคะแนน</h3><ol><li><b>เข้าสู่ระบบ Discord</b><span>ยืนยันบัญชีกับ Discord โดยตรง</span></li><li><b>เลือกผู้สมัครที่ต้องการ</b><span>ตรวจสอบชื่อและหมายเลขให้ถูกต้อง</span></li><li><b>ยืนยันการลงคะแนน</b><span>หนึ่งบัญชีลงคะแนนได้ครั้งเดียวต่อสมัย</span></li></ol><button class="primary" id="sign-in" disabled>กำลังตรวจสอบการตั้งค่า…</button><p class="security-note">ลงคะแนนได้เมื่อผู้ดูแลเปิดรับคะแนนเท่านั้น การพิมพ์ชื่อหรือ ID เองไม่ถือเป็นการยืนยันตัวตน</p><div class="rule"><b>มาตรการป้องกันการโกง</b><ul><li>หนึ่งบัญชี Discord ที่ยืนยันแล้วต่อหนึ่งคะแนนในสมัยนี้</li><li>ตรวจสอบสิทธิ์ที่เซิร์ฟเวอร์ ไม่เชื่อข้อมูลจากหน้าเว็บ</li><li>บันทึกคะแนนด้วยฐานข้อมูลและข้อกำหนด UNIQUE</li><li>บันทึกเหตุการณ์การพยายามลงคะแนนซ้ำ</li></ul></div></aside></div>
+  <section class="results" id="results"><div><p class="eyebrow">IN-GAME VOTE COUNT</p><h2>ผลคะแนน</h2><p><span id="results-term-name">สมัยที่ 1</span> · <span id="results-event-name">The lives of Thai soldiers on the border</span></p><p><strong id="total-votes">0</strong> คะแนนรวม</p></div><div id="results-list" class="results-list">กำลังโหลดผลคะแนน…</div></section>
+</main>
+<section class="admin-voting" id="admin-voting-controls" hidden>
+  <h2>แผงควบคุมผู้ดูแล</h2>
+  <p>จัดการระบบเลือกตั้งและเนื้อหาหน้าเว็บได้เมื่อเข้าสู่ระบบด้วยบัญชี Discord ที่กำหนดเป็นแอดมิน</p>
+  <nav class="admin-menu" role="tablist" aria-label="เมนูจัดการผู้ดูแล">
+    <button class="admin-menu-item active" id="admin-tab-overview" type="button" role="tab" aria-selected="true" aria-controls="admin-panel-overview" data-admin-tab="overview">ภาพรวม</button>
+    <button class="admin-menu-item" id="admin-tab-election" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-election" data-admin-tab="election">ตั้งค่าลงคะแนน</button>
+    <button class="admin-menu-item" id="admin-tab-candidates" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-candidates" data-admin-tab="candidates">จัดการผู้สมัคร</button>
+    <button class="admin-menu-item" id="admin-tab-content" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-content" data-admin-tab="content">แก้ไขหน้าเว็บ</button>
+    <button class="admin-menu-item" id="admin-tab-audit" type="button" role="tab" aria-selected="false" aria-controls="admin-panel-audit" data-admin-tab="audit">ประวัติกิจกรรม</button>
+  </nav>
+  <section class="admin-tab-panel" id="admin-panel-overview" role="tabpanel" aria-labelledby="admin-tab-overview" data-admin-panel="overview">
+    <h3>ภาพรวมระบบ</h3>
+    <p>สมัยปัจจุบัน: <strong id="admin-current-term">กำลังโหลด…</strong></p>
+    <div class="admin-stats" id="admin-stats" aria-live="polite"></div>
+  </section>
+  <section class="admin-tab-panel" id="admin-panel-election" role="tabpanel" aria-labelledby="admin-tab-election" data-admin-panel="election" hidden>
+    <h3>จัดการการลงคะแนน</h3>
+    <p>สมัยปัจจุบัน: <strong id="election-term-name">กำลังโหลด…</strong></p>
+    <p>การเปิดหรือปิดทันทีจะยกเลิกกำหนดเวลาเดิม</p>
+    <div class="admin-actions">
+      <button class="primary" id="open-voting" type="button">เปิดลงคะแนนทันที</button>
+      <button class="secondary" id="close-voting" type="button">ปิดลงคะแนน</button>
+    </div>
+    <form id="schedule-form">
+      <label>เริ่มลงคะแนน<input id="schedule-start" type="datetime-local" required></label>
+      <label>ปิดลงคะแนน<input id="schedule-end" type="datetime-local" required></label>
+      <button class="primary" type="submit">บันทึกกำหนดเวลา</button>
+    </form>
+    <form id="term-form">
+      <label>ชื่อสมัยการเลือกตั้งใหม่<input id="new-term-name" maxlength="80" required></label>
+      <p>เริ่มสมัยใหม่จะปิดการลงคะแนนและแยกผลคะแนนเดิม ผู้เล่นแต่ละคนจะลงคะแนนได้อีกหนึ่งครั้งในสมัยใหม่</p>
+      <button class="secondary" type="submit">เริ่มสมัยการเลือกตั้งใหม่</button>
+    </form>
+  </section>
+  <section class="admin-tab-panel" id="admin-panel-candidates" role="tabpanel" aria-labelledby="admin-tab-candidates" data-admin-panel="candidates" hidden>
+    <h3>จัดการผู้สมัคร</h3>
+    <p>แก้ไขหรือปิดใช้งานผู้สมัครได้เมื่อปิดรับคะแนนแล้ว ข้อมูลผู้สมัครที่มีคะแนนจะล็อกเพื่อรักษาผลคะแนน</p>
+    <form id="candidate-form" novalidate>
+      <input id="candidate-id" type="hidden">
+      <input id="candidate-active" type="hidden" value="true">
+      <label>หมายเลข<input id="candidate-number" type="number" min="1" max="9999" required></label>
+      <label>ชื่อผู้สมัคร<input id="candidate-name" maxlength="80" required></label>
+      <label>กลุ่ม / พรรค<input id="candidate-party" maxlength="80" required></label>
+      <label>คำขวัญ<input id="candidate-slogan" maxlength="220"></label>
+      <label>สีประจำตัว<input id="candidate-color" type="color" value="#2563eb" required></label>
+      <label>รูปผู้สมัคร (JPG / PNG / WebP)<input id="candidate-image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+      <div id="candidate-image-preview" class="candidate-image-preview" hidden>
+        <p>ลากรูปเพื่อจัดตำแหน่งใบหน้า และปรับซูมให้พอดีกับกรอบ</p>
+        <canvas id="candidate-image-crop" width="320" height="240" aria-label="กรอบครอปรูปผู้สมัคร"></canvas>
+        <label>ซูมรูป<input id="candidate-image-zoom" type="range" min="1" max="3" step="0.01" value="1"></label>
+      </div>
+      <label id="remove-candidate-image-label" class="remove-candidate-image" hidden><input id="remove-candidate-image" type="checkbox"> ลบรูปปัจจุบัน</label>
+      <div class="admin-actions"><button class="primary" type="submit" id="save-candidate">เพิ่มผู้สมัคร</button><button class="secondary" type="button" id="cancel-candidate-edit" hidden>ยกเลิกแก้ไข</button></div>
+    </form>
+    <p id="candidate-message" role="status" aria-live="polite"></p>
+    <div id="admin-candidates" class="admin-candidates"></div>
+  </section>
+  <section class="admin-tab-panel" id="admin-panel-content" role="tabpanel" aria-labelledby="admin-tab-content" data-admin-panel="content" hidden>
+    <h3>แก้ไขเนื้อหาหน้าเว็บ</h3>
+    <form id="site-content-form">
+      <label>ชื่อกิจกรรม<input name="eventName" maxlength="120" required></label>
+      <label>หัวข้อหลัก<input name="heroTitle" maxlength="100" required></label>
+      <label>หัวข้อรอง<input name="heroSubtitle" maxlength="160" required></label>
+      <label>รายละเอียดกิจกรรม<textarea name="heroDescription" maxlength="400" required></textarea></label>
+      <label>ประกาศ / คำชี้แจง<textarea name="notice" maxlength="300" required></textarea></label>
+      <label>คำขวัญท้ายเว็บ<input name="footerSlogan" maxlength="120" required></label>
+      <button class="primary" type="submit">บันทึกเนื้อหาหน้าเว็บ</button>
+    </form>
+  </section>
+  <section class="admin-tab-panel" id="admin-panel-audit" role="tabpanel" aria-labelledby="admin-tab-audit" data-admin-panel="audit" hidden>
+    <h3>กิจกรรมล่าสุด</h3>
+    <div id="admin-audit" class="admin-audit"></div>
+  </section>
+  <p id="admin-voting-message" role="status" aria-live="polite"></p>
+</section>
+<footer><span>◆ &nbsp; <span id="footer-event-name">The lives of Thai soldiers on the border</span></span><strong id="footer-slogan">“เสียงของคุณ ร่วมสร้างอนาคตของเรา”</strong><span>ไม่ใช่การเลือกตั้งในชีวิตจริง</span></footer>
+<dialog id="vote-dialog"><form method="dialog" class="dialog-content"><button class="close" aria-label="ปิด">×</button><p class="eyebrow">CONFIRM YOUR VOTE</p><h2>ยืนยันการลงคะแนน</h2><p id="confirm-copy">โปรดตรวจสอบผู้สมัครก่อนยืนยัน</p><p class="security-note">หนึ่งบัญชี Discord ลงคะแนนได้หนึ่งครั้งต่อสมัยการเลือกตั้ง และไม่สามารถแก้ไขคะแนนได้</p><p id="vote-message" role="status" aria-live="polite"></p><div class="dialog-actions"><button value="cancel" class="secondary">ยกเลิก</button><button id="confirm-vote" value="confirm" class="primary" disabled>ยืนยันคะแนน</button></div></form></dialog>
+<script src="/app.js?v=candidate-image-crop-2"></script>
+</body></html>
