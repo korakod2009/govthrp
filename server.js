@@ -694,13 +694,26 @@ app.get('/auth/discord/callback', async (req, res) => {
         ? tokenError.error
         : 'unknown_error';
       const responseType = tokenError ? 'json' : 'non-json';
-      console.error(`Discord token exchange failed with HTTP ${tokenResponse.status} (${errorCode}; response=${responseType}; content-type=${contentType.slice(0, 100)})`);
+      const retryAfterHeader = Number(tokenResponse.headers.get('retry-after'));
+      const retryAfterBody = Number(tokenError?.retry_after);
+      const retryAfterSeconds = Number.isFinite(retryAfterHeader) && retryAfterHeader > 0
+        ? retryAfterHeader
+        : Number.isFinite(retryAfterBody) && retryAfterBody > 0
+          ? retryAfterBody
+          : null;
+      console.error(`Discord token exchange failed with HTTP ${tokenResponse.status} (${errorCode}; response=${responseType}; content-type=${contentType.slice(0, 100)}${retryAfterSeconds ? `; retry-after=${Math.ceil(retryAfterSeconds)}s` : ''})`);
 
       const errorMessages = {
         invalid_client: 'Discord ไม่ยอมรับ Client ID หรือ Client Secret กรุณาตรวจว่าคัดลอกจากแอปพลิเคชันเดียวกันและใช้ Client Secret ปัจจุบันในไฟล์ .env แล้วรีสตาร์ตเซิร์ฟเวอร์',
         invalid_grant: 'รหัสเข้าสู่ระบบหมดอายุหรือถูกใช้ไปแล้ว กรุณาเริ่มเข้าสู่ระบบ Discord ใหม่ และตรวจว่า Redirect URI ใน .env ตรงกับ Discord Developer Portal ทุกตัวอักษร',
         invalid_request: 'คำขอเข้าสู่ระบบไม่ถูกต้อง กรุณาตรวจ Client ID, Redirect URI และการตั้งค่า OAuth ใน Discord Developer Portal'
       };
+      if (tokenResponse.status === 429) {
+        const waitMessage = retryAfterSeconds
+          ? `กรุณารอประมาณ ${Math.ceil(retryAfterSeconds)} วินาที`
+          : 'กรุณารอสักครู่';
+        return res.status(502).send(`Discord จำกัดคำขอเข้าสู่ระบบชั่วคราว (${errorCode}) ${waitMessage} แล้วเริ่มเข้าสู่ระบบใหม่เพียงครั้งเดียว ห้ามรีเฟรช callback เดิม`);
+      }
       if (errorMessages[errorCode]) return res.status(502).send(errorMessages[errorCode]);
       return res.status(502).send(`Discord ปฏิเสธคำขอแลกเปลี่ยนรหัสเข้าสู่ระบบ (HTTP ${tokenResponse.status}; ${responseType}; ${contentType.slice(0, 100)}) กรุณาตรวจ Logs ของ Render เพื่อดูรายละเอียด แล้วลองใหม่`);
     }
