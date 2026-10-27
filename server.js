@@ -682,18 +682,27 @@ app.get('/auth/discord/callback', async (req, res) => {
       })
     });
     if (!tokenResponse.ok) {
-      const tokenError = await tokenResponse.json().catch(() => null);
+      const contentType = tokenResponse.headers.get('content-type') || 'unknown';
+      const responseBody = await tokenResponse.text();
+      let tokenError = null;
+      try {
+        tokenError = JSON.parse(responseBody);
+      } catch {
+        tokenError = null;
+      }
       const errorCode = typeof tokenError?.error === 'string' && /^[a-z0-9_]{1,64}$/i.test(tokenError.error)
         ? tokenError.error
         : 'unknown_error';
-      console.error(`Discord token exchange failed with HTTP ${tokenResponse.status} (${errorCode})`);
+      const responseType = tokenError ? 'json' : 'non-json';
+      console.error(`Discord token exchange failed with HTTP ${tokenResponse.status} (${errorCode}; response=${responseType}; content-type=${contentType.slice(0, 100)})`);
 
       const errorMessages = {
         invalid_client: 'Discord ไม่ยอมรับ Client ID หรือ Client Secret กรุณาตรวจว่าคัดลอกจากแอปพลิเคชันเดียวกันและใช้ Client Secret ปัจจุบันในไฟล์ .env แล้วรีสตาร์ตเซิร์ฟเวอร์',
         invalid_grant: 'รหัสเข้าสู่ระบบหมดอายุหรือถูกใช้ไปแล้ว กรุณาเริ่มเข้าสู่ระบบ Discord ใหม่ และตรวจว่า Redirect URI ใน .env ตรงกับ Discord Developer Portal ทุกตัวอักษร',
         invalid_request: 'คำขอเข้าสู่ระบบไม่ถูกต้อง กรุณาตรวจ Client ID, Redirect URI และการตั้งค่า OAuth ใน Discord Developer Portal'
       };
-      return res.status(502).send(errorMessages[errorCode] || `ยืนยันตัวตนกับ Discord ไม่สำเร็จ (รหัส ${errorCode}) กรุณาตรวจการตั้งค่า OAuth แล้วลองใหม่`);
+      if (errorMessages[errorCode]) return res.status(502).send(errorMessages[errorCode]);
+      return res.status(502).send(`Discord ปฏิเสธคำขอแลกเปลี่ยนรหัสเข้าสู่ระบบ (HTTP ${tokenResponse.status}; ${responseType}; ${contentType.slice(0, 100)}) กรุณาตรวจ Logs ของ Render เพื่อดูรายละเอียด แล้วลองใหม่`);
     }
     const token = await tokenResponse.json();
     if (typeof token.access_token !== 'string') {
