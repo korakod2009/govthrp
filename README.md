@@ -38,6 +38,8 @@
   ตรวจให้แน่ใจว่าไม่มี `.env`, `*.sqlite`, `node_modules` หรือ `public/uploads` แล้วจึง commit และเพิ่ม remote ของ GitHub
 - GitHub ใช้เก็บ source code ไม่ใช่ที่รันเว็บ; เมื่อนำไป deploy ให้ตั้ง environment variables บน hosting และใช้ persistent storage สำหรับ `election.sqlite`, `sessions.sqlite` และ `public/uploads` เพื่อรักษาคะแนน session และรูปผู้สมัครเมื่อแอปรีสตาร์ต
 - ตั้ง `NODE_ENV=production`, `SESSION_SECRET` แบบสุ่มที่ยาวอย่างน้อย 32 ตัวอักษร และ Discord Redirect URI ให้ตรงกับ HTTPS URL ของเว็บที่ deploy แล้ว
+- สำหรับ Render ให้ตั้ง `DISCORD_REDIRECT_URI` เป็น `https://<ชื่อบริการหรือโดเมนจริง>/auth/discord/callback` ทั้งใน Environment ของ Render และ OAuth2 Redirects ใน Discord Developer Portal ให้ตรงกันทุกตัวอักษร รวมถึง `https://` และ path; อย่าใช้ `localhost` บน production
+- แอปเชื่อถือ reverse proxy หนึ่งชั้นสำหรับ HTTPS และ secure session cookie; หากใช้ proxy หลายชั้นหรือเปลี่ยนโฮสต์ ให้ตรวจ `trust proxy` และตรวจว่า URL ที่เปิดเว็บตรงกับโดเมนใน `DISCORD_REDIRECT_URI`
 - หาก hosting ไม่มี persistent storage หรือมีหลาย instance อย่าเปิดรับคะแนนจนกว่าจะตั้งค่าฐานข้อมูลและ storage แบบถาวรที่เหมาะสม เพราะไฟล์ SQLite ในเครื่องอาจสูญหายหรือแยกเป็นคนละชุด
 
 หากเข้าสู่ระบบแล้วพบ `invalid_client` ให้ตรวจว่า Client ID และ Client Secret เป็นของ Discord Application เดียวกัน และ Secret เป็นค่าปัจจุบันหลังการ reset โดยแก้ใน `.env` บนเครื่องเซิร์ฟเวอร์แล้วรีสตาร์ตเว็บ ห้ามส่ง Client Secret หรือ SESSION_SECRET ในแชต หากพบ `invalid_grant` ให้เริ่มเข้าสู่ระบบใหม่และตรวจว่า Redirect URI ใน `.env` ตรงกับ Discord Developer Portal ทุกตัวอักษร

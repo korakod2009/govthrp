@@ -10,6 +10,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 
 const app = express();
+app.set('trust proxy', 1);
 const SQLiteStore = SQLiteStoreFactory(session);
 const port = Number(process.env.PORT || 3000);
 const isProduction = process.env.NODE_ENV === 'production';
@@ -220,6 +221,16 @@ const adminIds = {
   discord: new Set((process.env.ADMIN_DISCORD_IDS || '').split(',').map(s => s.trim()).filter(Boolean))
 };
 const discordConfigured = Boolean(process.env.DISCORD_CLIENT_ID && process.env.DISCORD_CLIENT_SECRET && process.env.DISCORD_REDIRECT_URI);
+const discordCallbackMatchesRequest = req => {
+  try {
+    const callback = new URL(process.env.DISCORD_REDIRECT_URI);
+    return callback.origin === `${req.protocol}://${req.get('host')}`
+      && callback.pathname === '/auth/discord/callback'
+      && !callback.search && !callback.hash;
+  } catch {
+    return false;
+  }
+};
 const validDiscordId = value => /^\d{17,20}$/.test(String(value || ''));
 const discordAvatarUrl = (userId, avatarHash) => {
   if (typeof avatarHash === 'string' && /^(a_)?[a-f0-9]{32}$/i.test(avatarHash)) {
@@ -618,6 +629,9 @@ app.put('/api/admin/site-content', requireLogin, requireAdmin, (req, res) => {
 
 app.get('/auth/discord', (req, res, next) => {
   if (!discordConfigured) return res.status(503).send('ยังไม่ได้ตั้งค่า Discord OAuth กรุณาตั้งค่า DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET และ DISCORD_REDIRECT_URI');
+  if (!discordCallbackMatchesRequest(req)) {
+    return res.status(503).send('ที่อยู่ Discord Redirect URI ไม่ตรงกับเว็บไซต์นี้ กรุณาตั้ง DISCORD_REDIRECT_URI เป็น URL HTTPS ของเว็บไซต์ตามด้วย /auth/discord/callback และตั้ง URL เดียวกันใน Discord Developer Portal');
+  }
   const state = crypto.randomBytes(32).toString('hex');
   const verifier = crypto.randomBytes(32).toString('base64url');
   const challenge = crypto.createHash('sha256').update(verifier).digest('base64url');
@@ -640,6 +654,9 @@ app.get('/auth/discord', (req, res, next) => {
 });
 
 app.get('/auth/discord/callback', async (req, res) => {
+  if (discordConfigured && !discordCallbackMatchesRequest(req)) {
+    return res.status(503).send('ที่อยู่ Discord Redirect URI ไม่ตรงกับเว็บไซต์นี้ กรุณาตั้ง DISCORD_REDIRECT_URI เป็น URL HTTPS ของเว็บไซต์ตามด้วย /auth/discord/callback และตั้ง URL เดียวกันใน Discord Developer Portal');
+  }
   const expectedState = req.session.oauthState;
   const verifier = req.session.oauthVerifier;
   delete req.session.oauthState;
